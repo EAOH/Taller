@@ -1,0 +1,806 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBTallerFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="ActividadId" />
+          </Key>
+          <Property Name="ActividadDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ActividadNombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ActividadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="ProductoId" Type="int" />
+          <Property Name="ProductoCantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Bitacora">
+          <Key>
+            <PropertyRef Name="BitacoraId" />
+          </Key>
+          <Property Name="BitacoraId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BitacoraFormulario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BitacoraFuncion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BitacoraLlave" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteDireccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ClienteIdentificacion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ClienteNombre1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClienteNombre2" Type="varchar" MaxLength="50" />
+          <Property Name="ClienteApellido1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClienteApellido2" Type="varchar" MaxLength="50" />
+          <Property Name="ClienteTelefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estacion">
+          <Key>
+            <PropertyRef Name="EstacionId" />
+          </Key>
+          <Property Name="EstacionNombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ActividadId" Type="int" Nullable="false" />
+          <Property Name="EstacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaId" />
+          </Key>
+          <Property Name="FacturaImpuesto" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaFecha" Type="datetime" Nullable="false" />
+          <Property Name="FacturaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacturaDescuento" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaSubtotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FacturaDetalle">
+          <Key>
+            <PropertyRef Name="FacturaDetalleID" />
+          </Key>
+          <Property Name="FacturaDetalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductoId" Type="int" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Facturaid" Type="int" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoId" />
+          </Key>
+          <Property Name="PedidoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+          <Property Name="PedidoCantidad" Type="int" Nullable="false" />
+          <Property Name="PedidoDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PedidoPrecioUnitario" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductoExistencia" Type="int" Nullable="false" />
+          <Property Name="ProductoMarca" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductoNombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductoPrecioUnitario" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ProductoDescuento" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ProductoExistenciaMin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="ProveedorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProveedorFormaPago" Type="varchar" MaxLength="25" />
+          <Property Name="ProveedorNombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioIdentificacion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UsuarioDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsuarioDireccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UsuarioNombre1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsuarioNombre2" Type="varchar" MaxLength="50" />
+          <Property Name="UsuarioApellido1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsuarioApellido2" Type="varchar" MaxLength="50" />
+          <Property Name="UsuarioSalario" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="UsuarioTipoSalario" Type="varchar" MaxLength="10" />
+          <Property Name="UsuarioRolID" Type="int" Nullable="false" />
+          <Property Name="UsuarioTelefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UsuarioUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsuarioPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsuarioEstado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="VehiculoID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="VehiculoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VehiculoColor" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="VehiculoEstado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="VehiculoMarca" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehiculoModelo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehiculoPlaca" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Actividad__Produ__3A81B327">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Actividad__Usuar__398D8EEE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bitacora__Usuari__48CFD27E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Bitacora" Type="Self.Bitacora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Bitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estacion__Activi__3D5E1FD2">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Estacion" Type="Self.Estacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="ActividadId" />
+            </Principal>
+            <Dependent Role="Estacion">
+              <PropertyRef Name="ActividadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__Cliente__30F848ED">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaDe__Factu__45F365D3">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaId" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="Facturaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaDe__Produ__44FF419A">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__Producto__403A8C7D">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Provee__36B12243">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehiculo__Client__276EDEB3">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBTallerFModelStoreContainer">
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bitacora" EntityType="Self.Bitacora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estacion" EntityType="Self.Estacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FacturaDetalle" EntityType="Self.FacturaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehiculo" EntityType="Self.Vehiculo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Actividad__Produ__3A81B327" Association="Self.FK__Actividad__Produ__3A81B327">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Actividad__Usuar__398D8EEE" Association="Self.FK__Actividad__Usuar__398D8EEE">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bitacora__Usuari__48CFD27E" Association="Self.FK__Bitacora__Usuari__48CFD27E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bitacora" EntitySet="Bitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estacion__Activi__3D5E1FD2" Association="Self.FK__Estacion__Activi__3D5E1FD2">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Estacion" EntitySet="Estacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__Cliente__30F848ED" Association="Self.FK__Factura__Cliente__30F848ED">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaDe__Factu__45F365D3" Association="Self.FK__FacturaDe__Factu__45F365D3">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaDe__Produ__44FF419A" Association="Self.FK__FacturaDe__Produ__44FF419A">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__Producto__403A8C7D" Association="Self.FK__Pedido__Producto__403A8C7D">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Provee__36B12243" Association="Self.FK__Producto__Provee__36B12243">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehiculo__Client__276EDEB3" Association="Self.FK__Vehiculo__Client__276EDEB3">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBTallerFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="ActividadId" />
+          </Key>
+          <Property Name="ActividadDescripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActividadNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActividadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" />
+          <Property Name="ProductoCantidad" Type="Int32" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Actividad__Produ__3A81B327" FromRole="Actividad" ToRole="Producto" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Actividad__Usuar__398D8EEE" FromRole="Actividad" ToRole="Usuario" />
+          <NavigationProperty Name="Estacion" Relationship="Self.FK__Estacion__Activi__3D5E1FD2" FromRole="Actividad" ToRole="Estacion" />
+        </EntityType>
+        <EntityType Name="Bitacora">
+          <Key>
+            <PropertyRef Name="BitacoraId" />
+          </Key>
+          <Property Name="BitacoraId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BitacoraFormulario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BitacoraFuncion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BitacoraLlave" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Bitacora__Usuari__48CFD27E" FromRole="Bitacora" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteDireccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteIdentificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteNombre1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteNombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClienteApellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteApellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClienteTelefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK__Factura__Cliente__30F848ED" FromRole="Cliente" ToRole="Factura" />
+          <NavigationProperty Name="Vehiculo" Relationship="Self.FK__Vehiculo__Client__276EDEB3" FromRole="Cliente" ToRole="Vehiculo" />
+        </EntityType>
+        <EntityType Name="Estacion">
+          <Key>
+            <PropertyRef Name="EstacionId" />
+          </Key>
+          <Property Name="EstacionNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActividadId" Type="Int32" Nullable="false" />
+          <Property Name="EstacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Actividad" Relationship="Self.FK__Estacion__Activi__3D5E1FD2" FromRole="Estacion" ToRole="Actividad" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaId" />
+          </Key>
+          <Property Name="FacturaImpuesto" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaTotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaFecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FacturaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacturaDescuento" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="FacturaSubtotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Factura__Cliente__30F848ED" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="FacturaDetalle" Relationship="Self.FK__FacturaDe__Factu__45F365D3" FromRole="Factura" ToRole="FacturaDetalle" />
+        </EntityType>
+        <EntityType Name="FacturaDetalle">
+          <Key>
+            <PropertyRef Name="FacturaDetalleID" />
+          </Key>
+          <Property Name="FacturaDetalleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductoId" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Facturaid" Type="Int32" Nullable="false" />
+          <Property Name="Subtotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK__FacturaDe__Factu__45F365D3" FromRole="FacturaDetalle" ToRole="Factura" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__FacturaDe__Produ__44FF419A" FromRole="FacturaDetalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoId" />
+          </Key>
+          <Property Name="PedidoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <Property Name="PedidoCantidad" Type="Int32" Nullable="false" />
+          <Property Name="PedidoDescripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PedidoPrecioUnitario" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Pedido__Producto__403A8C7D" FromRole="Pedido" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoExistencia" Type="Int32" Nullable="false" />
+          <Property Name="ProductoMarca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoPrecioUnitario" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ProductoDescuento" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="ProductoExistenciaMin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.FK__Actividad__Produ__3A81B327" FromRole="Producto" ToRole="Actividad" />
+          <NavigationProperty Name="FacturaDetalle" Relationship="Self.FK__FacturaDe__Produ__44FF419A" FromRole="Producto" ToRole="FacturaDetalle" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK__Pedido__Producto__403A8C7D" FromRole="Producto" ToRole="Pedido" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK__Producto__Provee__36B12243" FromRole="Producto" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorDescripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProveedorFormaPago" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ProveedorNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__Provee__36B12243" FromRole="Proveedor" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioIdentificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioDescripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioDireccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioNombre1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioNombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioApellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioApellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioSalario" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="UsuarioTipoSalario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioRolID" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioTelefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioEstado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.FK__Actividad__Usuar__398D8EEE" FromRole="Usuario" ToRole="Actividad" />
+          <NavigationProperty Name="Bitacora" Relationship="Self.FK__Bitacora__Usuari__48CFD27E" FromRole="Usuario" ToRole="Bitacora" />
+        </EntityType>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="VehiculoID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="VehiculoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VehiculoColor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehiculoEstado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehiculoMarca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehiculoModelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehiculoPlaca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Vehiculo__Client__276EDEB3" FromRole="Vehiculo" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK__Actividad__Produ__3A81B327">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Actividad__Usuar__398D8EEE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estacion__Activi__3D5E1FD2">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Estacion" Type="Self.Estacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="ActividadId" />
+            </Principal>
+            <Dependent Role="Estacion">
+              <PropertyRef Name="ActividadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bitacora__Usuari__48CFD27E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Bitacora" Type="Self.Bitacora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Bitacora">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__Cliente__30F848ED">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehiculo__Client__276EDEB3">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaDe__Factu__45F365D3">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaId" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="Facturaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaDe__Produ__44FF419A">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__Producto__403A8C7D">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__Provee__36B12243">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBTallerFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" />
+          <EntitySet Name="Bitacora" EntityType="Self.Bitacora" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Estacion" EntityType="Self.Estacion" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="FacturaDetalle" EntityType="Self.FacturaDetalle" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Vehiculo" EntityType="Self.Vehiculo" />
+          <AssociationSet Name="FK__Actividad__Produ__3A81B327" Association="Self.FK__Actividad__Produ__3A81B327">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Actividad__Usuar__398D8EEE" Association="Self.FK__Actividad__Usuar__398D8EEE">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estacion__Activi__3D5E1FD2" Association="Self.FK__Estacion__Activi__3D5E1FD2">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Estacion" EntitySet="Estacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bitacora__Usuari__48CFD27E" Association="Self.FK__Bitacora__Usuari__48CFD27E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bitacora" EntitySet="Bitacora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__Cliente__30F848ED" Association="Self.FK__Factura__Cliente__30F848ED">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehiculo__Client__276EDEB3" Association="Self.FK__Vehiculo__Client__276EDEB3">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaDe__Factu__45F365D3" Association="Self.FK__FacturaDe__Factu__45F365D3">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaDe__Produ__44FF419A" Association="Self.FK__FacturaDe__Produ__44FF419A">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__Producto__403A8C7D" Association="Self.FK__Pedido__Producto__403A8C7D">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__Provee__36B12243" Association="Self.FK__Producto__Provee__36B12243">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBTallerFModelStoreContainer" CdmEntityContainer="DBTallerFEntities">
+          <EntitySetMapping Name="Actividad">
+            <EntityTypeMapping TypeName="DBTallerFModel.Actividad">
+              <MappingFragment StoreEntitySet="Actividad">
+                <ScalarProperty Name="ActividadDescripcion" ColumnName="ActividadDescripcion" />
+                <ScalarProperty Name="ActividadNombre" ColumnName="ActividadNombre" />
+                <ScalarProperty Name="ActividadId" ColumnName="ActividadId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="ProductoCantidad" ColumnName="ProductoCantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bitacora">
+            <EntityTypeMapping TypeName="DBTallerFModel.Bitacora">
+              <MappingFragment StoreEntitySet="Bitacora">
+                <ScalarProperty Name="BitacoraId" ColumnName="BitacoraId" />
+                <ScalarProperty Name="BitacoraFormulario" ColumnName="BitacoraFormulario" />
+                <ScalarProperty Name="BitacoraFuncion" ColumnName="BitacoraFuncion" />
+                <ScalarProperty Name="BitacoraLlave" ColumnName="BitacoraLlave" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="DBTallerFModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteDireccion" ColumnName="ClienteDireccion" />
+                <ScalarProperty Name="ClienteIdentificacion" ColumnName="ClienteIdentificacion" />
+                <ScalarProperty Name="ClienteNombre1" ColumnName="ClienteNombre1" />
+                <ScalarProperty Name="ClienteNombre2" ColumnName="ClienteNombre2" />
+                <ScalarProperty Name="ClienteApellido1" ColumnName="ClienteApellido1" />
+                <ScalarProperty Name="ClienteApellido2" ColumnName="ClienteApellido2" />
+                <ScalarProperty Name="ClienteTelefono" ColumnName="ClienteTelefono" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estacion">
+            <EntityTypeMapping TypeName="DBTallerFModel.Estacion">
+              <MappingFragment StoreEntitySet="Estacion">
+                <ScalarProperty Name="EstacionNombre" ColumnName="EstacionNombre" />
+                <ScalarProperty Name="ActividadId" ColumnName="ActividadId" />
+                <ScalarProperty Name="EstacionId" ColumnName="EstacionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="DBTallerFModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="FacturaImpuesto" ColumnName="FacturaImpuesto" />
+                <ScalarProperty Name="FacturaTotal" ColumnName="FacturaTotal" />
+                <ScalarProperty Name="FacturaFecha" ColumnName="FacturaFecha" />
+                <ScalarProperty Name="FacturaId" ColumnName="FacturaId" />
+                <ScalarProperty Name="FacturaDescuento" ColumnName="FacturaDescuento" />
+                <ScalarProperty Name="FacturaSubtotal" ColumnName="FacturaSubtotal" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacturaDetalle">
+            <EntityTypeMapping TypeName="DBTallerFModel.FacturaDetalle">
+              <MappingFragment StoreEntitySet="FacturaDetalle">
+                <ScalarProperty Name="FacturaDetalleID" ColumnName="FacturaDetalleID" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Facturaid" ColumnName="Facturaid" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="DBTallerFModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="PedidoId" ColumnName="PedidoId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="PedidoCantidad" ColumnName="PedidoCantidad" />
+                <ScalarProperty Name="PedidoDescripcion" ColumnName="PedidoDescripcion" />
+                <ScalarProperty Name="PedidoPrecioUnitario" ColumnName="PedidoPrecioUnitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="DBTallerFModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+                <ScalarProperty Name="ProductoDescripcion" ColumnName="ProductoDescripcion" />
+                <ScalarProperty Name="ProductoExistencia" ColumnName="ProductoExistencia" />
+                <ScalarProperty Name="ProductoMarca" ColumnName="ProductoMarca" />
+                <ScalarProperty Name="ProductoNombre" ColumnName="ProductoNombre" />
+                <ScalarProperty Name="ProductoPrecioUnitario" ColumnName="ProductoPrecioUnitario" />
+                <ScalarProperty Name="ProductoDescuento" ColumnName="ProductoDescuento" />
+                <ScalarProperty Name="ProductoExistenciaMin" ColumnName="ProductoExistenciaMin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="DBTallerFModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+                <ScalarProperty Name="ProveedorDescripcion" ColumnName="ProveedorDescripcion" />
+                <ScalarProperty Name="ProveedorFormaPago" ColumnName="ProveedorFormaPago" />
+                <ScalarProperty Name="ProveedorNombre" ColumnName="ProveedorNombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DBTallerFModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="UsuarioIdentificacion" ColumnName="UsuarioIdentificacion" />
+                <ScalarProperty Name="UsuarioDescripcion" ColumnName="UsuarioDescripcion" />
+                <ScalarProperty Name="UsuarioDireccion" ColumnName="UsuarioDireccion" />
+                <ScalarProperty Name="UsuarioNombre1" ColumnName="UsuarioNombre1" />
+                <ScalarProperty Name="UsuarioNombre2" ColumnName="UsuarioNombre2" />
+                <ScalarProperty Name="UsuarioApellido1" ColumnName="UsuarioApellido1" />
+                <ScalarProperty Name="UsuarioApellido2" ColumnName="UsuarioApellido2" />
+                <ScalarProperty Name="UsuarioSalario" ColumnName="UsuarioSalario" />
+                <ScalarProperty Name="UsuarioTipoSalario" ColumnName="UsuarioTipoSalario" />
+                <ScalarProperty Name="UsuarioRolID" ColumnName="UsuarioRolID" />
+                <ScalarProperty Name="UsuarioTelefono" ColumnName="UsuarioTelefono" />
+                <ScalarProperty Name="UsuarioUsuario" ColumnName="UsuarioUsuario" />
+                <ScalarProperty Name="UsuarioPassword" ColumnName="UsuarioPassword" />
+                <ScalarProperty Name="UsuarioEstado" ColumnName="UsuarioEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehiculo">
+            <EntityTypeMapping TypeName="DBTallerFModel.Vehiculo">
+              <MappingFragment StoreEntitySet="Vehiculo">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="VehiculoID" ColumnName="VehiculoID" />
+                <ScalarProperty Name="VehiculoColor" ColumnName="VehiculoColor" />
+                <ScalarProperty Name="VehiculoEstado" ColumnName="VehiculoEstado" />
+                <ScalarProperty Name="VehiculoMarca" ColumnName="VehiculoMarca" />
+                <ScalarProperty Name="VehiculoModelo" ColumnName="VehiculoModelo" />
+                <ScalarProperty Name="VehiculoPlaca" ColumnName="VehiculoPlaca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
